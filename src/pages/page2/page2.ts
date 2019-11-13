@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Page1 } from '../page1/page1'
 
 @IonicPage()
 @Component({
@@ -7,32 +8,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'page2.html'
 })
 export class Page2 {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{ title: string, note: string, icon: string }>;
+  
+  public editText: String = "";
+  callback: any;
+  name: String = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-      'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+    this.name = navParams.get('nome');
+    this.callback = navParams.get('callback');
+    this.editText = this.name;
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push('Page2', {
-      item: item
-    });
+  btnClickCancela() {
+    this.voltaPag1(this.name);
   }
+
+  btnClickConfirma(){
+    this.voltaPag1(this.editText);
+  }
+
+  voltaPag1(nome){
+    this.callback(nome);
+    this.navCtrl.pop();
+  }
+
 }
